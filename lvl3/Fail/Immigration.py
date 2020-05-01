@@ -1,5 +1,37 @@
 
 import time as tim
+
+def solution(n, times):
+    
+    totalTime = min(times) * n
+    halfTime = totalTime//2 + totalTime%2
+    count = 0
+    for time in times:
+        count += totalTime//time
+    cutValue = float('inf')
+
+    while  count != n:
+        totalTime += count>n and -1*halfTime or halfTime
+        halfTime = halfTime//2 + 1
+        count=0
+        for time in times:
+            count += totalTime//time
+
+    for time in times:
+        tmp = totalTime % time
+        if  tmp < cutValue:
+            cutValue = tmp
+
+##    totalTime -= cutValue
+        
+    return totalTime
+    
+    
+def checkCount(totalTime,times):
+    count=0
+    for time in times:
+        count += totalTime//time
+    return count
 ##def solution(n, times):
 ##    
 ##    minValue = min(times)
@@ -125,37 +157,6 @@ import time as tim
 ##    return totalTime
 ##    
 ##    
-def solution(n, times):
-    
-    totalTime = min(times) * n
-    halfTime = totalTime//2 + totalTime%2
-    count = 0
-    for time in times:
-        count += totalTime//time
-    cutValue = float('inf')
-
-    while  count != n:
-        totalTime += count>n and -1*halfTime or halfTime
-        halfTime = halfTime//2 + 1
-        count=0
-        for time in times:
-            count += totalTime//time
-
-    for time in times:
-        tmp = totalTime % time
-        if  tmp < cutValue:
-            cutValue = tmp
-
-##    totalTime -= cutValue
-        
-    return totalTime
-    
-    
-def checkCount(totalTime,times):
-    count=0
-    for time in times:
-        count += totalTime//time
-    return count
     
 print(solution(500000,[7,8,9,10,23,4,5,4,34,123,345,457,23,345687,2345,234,45,7345]))
 
