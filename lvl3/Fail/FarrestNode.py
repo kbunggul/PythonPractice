@@ -1,41 +1,46 @@
-
 def solution(n, edge):
+    
     answer = 0
     clearSet = {1}
     waitSet = {1}
     
-    
     while len(clearSet) != n:
+
         tmpEdge = []
-        tmpSet = []
+        tmpSet = set() 
+        
         for tmp in edge:
             if tmp[0] in waitSet or tmp[1] in waitSet:
-                tmpSet+= [tmp]
+                tmpSet.update(tmp)
             else:
-                tmpEdge += [tmp]
+                tmpEdge.append(tmp)
         edge = tmpEdge
-##        tmpSet = [i for i in edge if i[0] in waitSet or i[1] in waitSet]
-##        edge = [tmp for tmp in edge if tmp not in tmpSet]
+        
         if len(tmpSet) == 0:
             return n-len(clearSet)
-
-##        tmpWait = set()
-##        for tmp in tmpSet:
-##            tmpWait = tmpWait | set(tmp)
-##        waitSet = tmpWait.difference(waitSet)
-            
-        waitSet = ({tmp[0] for tmp in tmpSet} | {tmp[1] for tmp in tmpSet}).difference(waitSet)
-        clearSet = clearSet | waitSet
-
-            
-    if len(clearSet) == n:
-        return len(waitSet)
-    else:
-        return n - len(clearSet)
+        
+        waitSet = tmpSet.difference(waitSet)
+        clearSet = clearSet.union(waitSet)
+    return len(waitSet)
 
 print(solution(6,[[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]))
 print(solution(8,[[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2],[8, 7]]))
 
+##        tmpEdge = [i for i in edge if i[0] in waitSet or i[1] in waitSet]
+##        tmpSet -= tmpSet
+##        
+##        for tmp in tmpEdge:
+##            tmpSet.update(tmp)
+##            edge.remove(tmp)
+            
+
+
+##        tmpSet = [i for i in edge if i[0] in waitSet or i[1] in waitSet]
+##        edge = [tmp for tmp in edge if tmp not in tmpSet]
+##        tmpWait = set()
+##        for tmp in tmpSet:
+##            tmpWait = tmpWait | set(tmp)
+##        waitSet = tmpWait.difference(waitSet)
 
 
 ##
